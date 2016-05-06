@@ -3,6 +3,7 @@
 Enumerator for the different types of bets
 */
 
+
 package baccarat;
 
 public enum BetType {
