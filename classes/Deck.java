@@ -9,18 +9,22 @@ package baccarat;
 
 public class Deck {
 	
+
 	//Instance Variables
 	private ArrayList<Card> activePile;
+
 
 	//Constructor
 	public Deck() {
 		this.buildDeck();
 	}
 
+
 	//Getters
 	public ArrayList<Card> getActivePile() {
 		return this.activePile;
 	}
+
 
 	//buildDeck : Initializes a deck
 	public void buildDeck() {
@@ -49,6 +53,7 @@ public class Deck {
 		}
 	}
 
+
 	//dealCard : deals a random card and removes it from the activePile
 	public Card dealCard() {
 		Random randomInt = new Random();
@@ -57,6 +62,7 @@ public class Deck {
 		activePile.remove(index);
 		return card;
 	}
+	
 
 	//isEmpty : boolean if there are no more active cards
 	public boolean isEmpty() {

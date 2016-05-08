@@ -9,15 +9,18 @@ package baccarat;
 
 public class Bet {
 
+
 	//Instance Variables
 	private BetType betType;
 	private double amount;
+
 
 	//Constructor
 	public Bet(BetType betType, double amount) {
 		this.betType = betType;
 		this.amount = amount;
 	}
+	
 
 	//Getters
 	public BetType getBetType() {

@@ -9,9 +9,11 @@ package baccarat;
 
 public class Player {
 
+
 	//Instance Variables
 	private String name;
 	private Double balance;
+
 
 	//Constructor
 	public Player(String name, Double balance) {
@@ -19,13 +21,15 @@ public class Player {
 		this.balance = balance;
 	}
 
+
 	//Setters
 	public void setName(String name) {
 		this.name = name;
 	}
-	public void setBalance(String balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+	
 
 	//Getters
 	public String getName() {
