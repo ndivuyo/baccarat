@@ -20,9 +20,9 @@ public class Card {
 
 		//Set the point value based on facevalue
 		if (faceValue > 9)
-			pointValue = 0;
+			this.pointValue = 0;
 		else
-			pointValue = faceValue;
+			this.pointValue = faceValue;
 	}
 
 	//Getters
