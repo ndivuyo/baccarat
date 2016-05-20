@@ -5,6 +5,7 @@ This is the main class for controlling gameplay
 
 
 package baccarat;
+
 import java.util.*;
 
 
@@ -33,16 +34,14 @@ public class Game {
 	}
 
 
-
 	//addPlayer : method to add a player to the game
 	public void addPlayer() {
 		String playerName = "";
 		double playerBalance = STARTING_BALANCE;
 
-		//ADD GUI CODE TO GET PLAYER NAME AND STARTING BALANCE FROM INPUT FIELDS
+		//GUI TO GET INPUT
 
-		Player newPlayer = new Player(playerName, playerBalance);
-		playerList.add(newPlayer);
+		this.playerList.add(new Player(playerName, playerBalance));
 	}
 
 

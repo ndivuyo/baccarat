@@ -5,6 +5,7 @@ This is the class for controlling rounds
 
 
 package baccarat;
+
 import java.util.Scanner;
 import java.lang.Math;
 import java.util.*;
@@ -40,6 +41,11 @@ public class Round {
 
 	//playerBet : method for a player to create a bet
 	public Bet playerBet(Player player) {
+
+
+		//MUCH OF THIS WILL CHANGE FOR GUI, SOME WILL STAY
+
+
 		//User input
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Who will you bet on?\n(0) for Banker, (1) for Player, (2) for Tie, (3) for Pass.\n");
@@ -96,7 +102,7 @@ public class Round {
 	public void placeBets(ArrayList<Player> players) {
 		for (int i = 0; i < players.size(); i++) {
 			//Add bets to the betList in player order
-			this.betList.add( playerBet(players.get(i)) );
+			this.betList.add( this.playerBet(players.get(i)) );
 		}
 	}
 
