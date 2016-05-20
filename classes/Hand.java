@@ -5,6 +5,7 @@ A hand class for holding and using playing cards
 
 
 package baccarat;
+import java.util.*;
 
 
 public class Hand {
@@ -18,6 +19,7 @@ public class Hand {
 	//Constructor
 	public Hand(HandType handType) {
 		this.handType = handType;
+		this.cardList = new ArrayList<Card>();
 	}
 
 

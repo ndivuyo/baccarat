@@ -6,6 +6,8 @@ This is the class for controlling rounds
 
 package baccarat;
 import java.util.Scanner;
+import java.lang.Math;
+import java.util.*;
 
 
 public class Round {
@@ -18,6 +20,8 @@ public class Round {
 
 	//Constructor
 	public Round() {
+		this.handList = new ArrayList<Hand>();
+		this.betList = new ArrayList<Bet>();
 		this.handList.add( new Hand(HandType.BANKER) );
 		this.handList.add( new Hand(HandType.PLAYER) );
 	}
@@ -80,9 +84,8 @@ public class Round {
 				betType = BetType.TIE;
 				break;
 			case 3:
-				betType = BetType.PASS;
-				break;
 			default:
+				betType = BetType.PASS;
 		}
 
 		return new Bet(betType, betAmount);
@@ -92,7 +95,7 @@ public class Round {
 	//placeBets : method for players to place bets
 	public void placeBets(ArrayList<Player> players) {
 		for (int i = 0; i < players.size(); i++) {
-			//Add bets to the betlist in player order
+			//Add bets to the betList in player order
 			this.betList.add( playerBet(players.get(i)) );
 		}
 	}
@@ -139,7 +142,7 @@ public class Round {
 			return BetType.BANKER;
 		else if (totals[0] > totals[1])
 			return BetType.PLAYER;
-		else if (totals[0] == totals[1])
+		else
 			return BetType.TIE;
 	}
 
@@ -158,6 +161,6 @@ public class Round {
 
 	//calculateWinnings : method to calculate the winnings for a player's bet
 	public double calculateWinnings(Bet bet) {
-
+		return 0;
 	}
 }

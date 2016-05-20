@@ -5,6 +5,9 @@ This is a class for the deck of playing cards
 
 
 package baccarat;
+import java.lang.Math;
+import java.util.Random;
+import java.util.*;
 
 
 public class Deck {
@@ -16,6 +19,7 @@ public class Deck {
 
 	//Constructor
 	public Deck() {
+		this.activePile = new ArrayList<Card>();
 		this.buildDeck();
 	}
 
@@ -33,7 +37,7 @@ public class Deck {
 			Suit suit;
 
 			//Obtain one of the four suits
-			switch(Math.floor(i / 13)) {
+			switch( (int) Math.floor(i / 13) ) {
 				case 0:
 					suit = Suit.SPADE;
 					break;
@@ -46,6 +50,8 @@ public class Deck {
 				case 3:
 					suit = Suit.DIAMOND;
 					break;
+				default:
+					suit = Suit.SPADE;
 			}
 
 			//Add a card with suit and face value
