@@ -108,13 +108,17 @@ public class Round {
 
 
 	//deal : method to deal a card to a hand
-	public void deal(Hand hand, Deck deck) {
+	public Card deal(Hand hand, Deck deck) {
 		//Check if deck is empty, if so add new cards
 		if (deck.isEmpty())
 			deck.buildDeck();
 
+		Card dealtCard = deck.dealCard();
+
 		//Add card to a hand
-		hand.addCard( deck.dealCard() );
+		hand.addCard(dealtCard);
+
+		return dealtCard;
 	}
 
 
@@ -131,7 +135,53 @@ public class Round {
 
 	//dealThirdCard : method to determine and deal third card
 	public void dealThirdCard(Deck deck) {
+		boolean playerDrawStatus = false, bankerDrawStatus = false;
+		int playerThirdCard = 0;
+		int[] handValues = {handList.get(0).calculateValue(), handList.get(1).calculateValue()};
 
+		if (!(handValues[0] > 7) || !(handValues[1] > 7)) {
+
+			//Determine Player Hand first
+			if (handValues[1] < 6) {
+				playerThirdCard = deal(this.handList.get(1), deck).getPointValue();
+				playerDrawStatus = true;
+			} else
+				playerDrawStatus = false;
+
+			//Determine Banker Hand
+			if (playerDrawStatus == false) {
+				if (handValues[0] < 6)
+					bankerDrawStatus = true;
+			} else {
+				if (handValues[0] < 3)
+					bankerDrawStatus = true;
+				else {
+					switch (handValues[0]) {
+						case 3:
+							if (playerThirdCard != 8)
+								bankerDrawStatus = true;
+							break;
+						case 4:
+							if (playerThirdCard > 1 && playerThirdCard < 8)
+								bankerDrawStatus = true;
+							break;
+						case 5:
+							if (playerThirdCard > 3 && playerThirdCard < 8)
+								bankerDrawStatus = true;
+							break;
+						case 6:
+							if (playerThirdCard > 5 && playerThirdCard < 8)
+								bankerDrawStatus = true;
+							break;
+						default:
+					}
+				}
+			}
+		}
+
+		//deal banker third card
+		if (bankerDrawStatus == true)
+			deal(this.handList.get(0), deck);
 	}
 
 
@@ -159,14 +209,23 @@ public class Round {
 			//Determine if player won the bet
 			if (this.betList.get(i).getBetType() == winner) {
 				//Give winnings to a player
-				players.get(i).setBalance( calculateWinnings(this.betList.get(i)) );
+				players.get(i).setBalance( calculateWinnings(winner, this.betList.get(i).getAmount()) );
 			}
 		}
 	}
 
 
 	//calculateWinnings : method to calculate the winnings for a player's bet
-	public double calculateWinnings(Bet bet) {
-		return 0;
+	public double calculateWinnings(BetType winner, double amount) {
+		double winnings = 0;
+	
+		if (winner == BetType.PLAYER)
+			winnings = amount * 2;
+		else if (winner == BetType.BANKER)
+			winnings = (amount * 2) - (amount * 2 * 0.05);
+		else if (winner == BetType.TIE)
+			winnings = amount * 8;
+
+		return winnings;
 	}
 }

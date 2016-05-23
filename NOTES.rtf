@@ -8,7 +8,7 @@
 COMPILE ALL IN PACKAGE (terminal):\
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
 
-\f1\b0\fs22 \cf0 \CocoaLigature0 javac classes/*.java enumerators/*.java
+\f1\b0\fs22 \cf0 \CocoaLigature0 javac baccarat/*.java
 \f0\b\fs24 \CocoaLigature1 \
 \pard\tx720\tx1106\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
 \cf0 \
@@ -31,29 +31,15 @@ COMPILE ALL IN PACKAGE (terminal):\
 
 \i\b 3rd card drawn according to rules:
 \i0\b0 \
-PLAYER:\
-- 1st cards total 0-5 draws 3rd card\
-- 6 or 7, stands\
-- 8 or 9, stands \'93on the natural\'94\
+If either the player or the banker has a total of an 8 or a 9 they both stand. There is no exceptions and this rule overrides all other rules.\
+If the player has total of 6 or 7, the player stands.\
+If the player stands, the banker hits on a total of 5 or less.\
+If the player has total of 5 or less, the player automatically hits and the banker gives the player a third card.\
+If the player gets the third card then the banker draws a third card according to the following rules:\
 \
-BANKER:\
-- must stand on totals of 6 or greater 
-\i if Player does not draw 3rd card
-\i0 \
-- A, 0, 1 , 2 always draws, 
-\i unless player has a natural\
-
-\i0 - total 3, draws 
-\i if player has a third card of anything but 8\
-
-\i0 - total 4, draws 
-\i if player has a third card of anything but 1, 8, 9, 0\
-
-\i0 - total 5, draws 
-\i if player has a third card of anything but 1, 2, 3, 8, 9, 0\
-
-\i0 - total 6, draws 
-\i if player has a third card of 6, 7\
-
-\i0 - total 7, banker stands\
-- total 8 or 9, stands on natural}
+Banker has total of 0, 1, 2: Banker always draws a third card.\
+Banker has total of 3: Banker draws if Player's Third Card is 1-2-3-4-5-6-7-9-0 (not 8)\
+Banker has total of 4: Banker draws if Player's Third Card is 2-3-4-5-6-7\
+Banker has total of 5: Banker draws if Player's Third Card is 4-5-6-7\
+Banker has total of 6: Banker draws if Player's Third Card is of 6-7\
+Banker has total of 7: Banker always stands.}

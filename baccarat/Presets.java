@@ -28,7 +28,7 @@ public class Presets {
 	
 
 	//loadPlayer : method to load a player from a text file
-	//public static Player loadPlayer(String playerName) {
-
-	//}
+	public static Player loadPlayer(String playerName) {
+		return new Player("Test", 0.0);
+	}
 }
