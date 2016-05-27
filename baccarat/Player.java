@@ -1,11 +1,4 @@
-/* 
-2016
-This class is for a user player in the game
-*/
-
-
 package baccarat;
-
 
 public class Player {
 
@@ -16,6 +9,11 @@ public class Player {
 
 
 	//Constructor
+	public Player(){
+		this.name = "";
+		this.balance = 0.0;
+	}
+	
 	public Player(String name, Double balance) {
 		this.name= name;
 		this.balance = balance;
@@ -37,5 +35,13 @@ public class Player {
 	}
 	public double getBalance() {
 		return this.balance;
+	}
+	
+	
+	//overriding toString method
+	@Override
+	public String toString()							
+	{
+		return this.name+","+this.balance;
 	}
 }
