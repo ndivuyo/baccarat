@@ -10,7 +10,7 @@ import java.util.*;
 
 
 public class Game {
-	
+
 	//instance variables
 	private ArrayList<Player> playerList;					//Players in the game
 	private static final int MAX_PLAYERS = 4;				//Max players permitted
@@ -35,8 +35,8 @@ public class Game {
 
 
 	//addPlayer : method to add a player to the game
-	public void addPlayer() {
-		String playerName = "";
+	public void addPlayer(String name) {
+		String playerName = name;
 		double playerBalance = STARTING_BALANCE;
 
 		//GUI TO GET INPUT
@@ -48,12 +48,16 @@ public class Game {
 	//removePlayer : method to remove a player from the game
 	public void removePlayer(String playerName) {
 		for (int i = 0; i < this.playerList.size(); i++) {
-			if (this.playerList.get(i).getName() == playerName) {
+			if (this.playerList.get(i).getName().equals(playerName)) {
 				this.playerList.remove(i);
 				break;
 			}
 		}
 	}
+
+	public ArrayList<Player> getPlayerList(){
+        return playerList;
+    }
 
 
 	//startGame : method to start game
