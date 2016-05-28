@@ -17,6 +17,7 @@ public class Game {
 	private static final double STARTING_BALANCE = 1000;	//Standard starting money for players
 	private Deck deck;										//The card deck
 	private Thread round;									//Thread to run gameplay rounds
+	private Main main;
 
 
 	//Constructor
@@ -26,21 +27,10 @@ public class Game {
 	}
 
 
-
-	/**** main ****/
-	public static void main(String[] args) {
-		Game game = new Game();
-		game.startGame();
-	}
-
-
 	//addPlayer : method to add a player to the game
 	public void addPlayer(String name) {
 		String playerName = name;
 		double playerBalance = STARTING_BALANCE;
-
-		//GUI TO GET INPUT
-
 		this.playerList.add(new Player(playerName, playerBalance));
 	}
 
