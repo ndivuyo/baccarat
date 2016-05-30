@@ -1,10 +1,15 @@
 package baccarat;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -99,6 +104,13 @@ public class TitleController {
 
 
 
-    public void startGame(ActionEvent actionEvent) {
+    public void startGame(ActionEvent actionEvent) throws IOException {
+        Parent root;
+        Stage stage;
+        stage=(Stage) console.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("playscreen.fxml"));
+        Scene scene = new Scene(root, 1024, 600);
+        stage.setScene(scene);
+        stage.show();
     }
 }
