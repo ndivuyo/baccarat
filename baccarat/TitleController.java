@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +42,24 @@ public class TitleController {
         }else {
             String uname = nameField.getText().trim();
             Main.game.addPlayer(uname);
+            consoleMsg("Player added: " + uname);
+            nameField.setText("");
+            updatePList();
+        }
+    }
+
+    public void loadPlayer(ActionEvent actionEvent){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        String uname = nameField.getText().trim();
+        if(Presets.loadPlayer(uname).getName().equals("")){
+            alert.setContentText("Player not found.");
+            alert.showAndWait();
+            consoleMsg("player not found.");
+            nameField.setText("");
+        }else {
+            Main.game.addPlayer(Presets.loadPlayer(uname));
             consoleMsg("Player added: " + uname);
             nameField.setText("");
             updatePList();

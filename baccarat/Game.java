@@ -34,6 +34,16 @@ public class Game {
 		this.playerList.add(new Player(playerName, playerBalance));
 	}
 
+    public void addPlayer(String name, double bal) {
+        String playerName = name;
+        double playerBalance = bal;
+        this.playerList.add(new Player(playerName, playerBalance));
+    }
+
+    public void addPlayer(Player player) {
+        this.playerList.add(player);
+    }
+
 
 	//removePlayer : method to remove a player from the game
 	public void removePlayer(String playerName) {
