@@ -15,7 +15,7 @@ public class PlayscreenController {
         String[] lines = curr.split("\n");
         String nw = "";
         nw += msg + "\n";
-        if(lines.length>5) {
+        if(lines.length>6) {
             for (int i = 0; i < lines.length-1; i++) {
                 nw += lines[i]+"\n";
             }

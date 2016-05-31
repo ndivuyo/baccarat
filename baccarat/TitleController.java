@@ -105,12 +105,21 @@ public class TitleController {
 
 
     public void startGame(ActionEvent actionEvent) throws IOException {
-        Parent root;
-        Stage stage;
-        stage=(Stage) console.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("playscreen.fxml"));
-        Scene scene = new Scene(root, 1024, 600);
-        stage.setScene(scene);
-        stage.show();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        if(Main.game.getPlayerList().size()<1){
+            alert.setContentText("Please add at least one player.");
+            alert.showAndWait();
+            consoleMsg("need more players to start game.");
+        }else {
+            Parent root;
+            Stage stage;
+            stage = (Stage) console.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("playscreen.fxml"));
+            Scene scene = new Scene(root, 1024, 600);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 }
