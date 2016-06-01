@@ -41,18 +41,19 @@ public class Main extends Application {
     }
 
 
-
-    /***   main method   ***/
+    /***
+     * main method
+     ***/
     public static void main(String[] args) {
         //Launch the UI Stage
         launch(args);
     }
+
     /****/
 
 
-
     //getCurrentScene
-    public Scene getCurrentScene(){
+    public Scene getCurrentScene() {
         return currentScene;
     }
 }
