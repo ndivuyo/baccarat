@@ -33,10 +33,21 @@
                <font>
                   <Font size="14.0" />
                </font></Text>
-            <Button mnemonicParsing="false" onAction="#buttonPress" text="Button" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+            <Button fx:id="start" mnemonicParsing="false" onAction="#buttonPress" text="Start" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets right="70.0" />
+               </GridPane.margin>
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitclick" text="Exit" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+               <font>
+                  <Font size="16.0" />
+               </font>
                <GridPane.margin>
                   <Insets right="15.0" />
-               </GridPane.margin></Button>
+               </GridPane.margin>
+            </Button>
          </children>
       </GridPane>
    </top>

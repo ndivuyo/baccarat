@@ -8,6 +8,7 @@ package baccarat;
 
 import javafx.application.Platform;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -20,6 +21,7 @@ public class Game {
     private Deck deck;                                        //The card deck
     private Main main;
     public RunRound runround;
+    public Thread thread;
 
     //Constructor
     public Game() {
@@ -66,6 +68,8 @@ public class Game {
         //Thread to run the rounds in
         //Used this way instead so there can be proper communication between the Round thread and the javaFX thread
         runround = new RunRound(this.playerList, this.deck);
+        //thread = new Thread(runround);
+        //thread.start();
         Platform.runLater(runround);
     }
 
@@ -84,6 +88,7 @@ public class Game {
         //Instance variables
         private ArrayList<Player> playerList;
         private Deck deck;
+        public boolean running=true;
 
         //Constructor
         public RunRound(ArrayList<Player> players, Deck deck) {
@@ -91,24 +96,28 @@ public class Game {
             this.deck = deck;
         }
 
+
         //run : overridden method for runnable
         public void run() {
             Round round = new Round();
-            //Sequence for each round
-            while (true) {
 
-                round.newRound();                        //resets round
+            round.newRound();
 
-                round.placeBets(this.playerList);        //players bet
+            round.placeBets(Main.game.playerList);
 
-                round.dealTwoCards(this.deck);            //deal the first 2 cards
+            round.dealTwoCards(Main.game.deck);
 
-                round.dealThirdCard(this.deck);            //determine and deal third card
+            round.dealThirdCard(Main.game.deck);
 
-                round.giveWinnings(round.determineWinner(), this.playerList);        //determine winning hand and distribute money
-
-
+            try {
+                round.giveWinnings(round.determineWinner(), Main.game.playerList);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+            Main.play.start.setVisible(true);
+            Main.play.exitButton.setVisible(true);
+
         }
     }
 }

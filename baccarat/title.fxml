@@ -19,10 +19,11 @@
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="295.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="195.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="236.0" minHeight="10.0" prefHeight="139.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="111.0" minHeight="4.0" prefHeight="36.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -99,5 +100,10 @@
             </Text>
          </children>
       </VBox>
+      <Button mnemonicParsing="false" onAction="#exit" text="Quit" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
    </children>
 </GridPane>

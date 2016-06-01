@@ -8,6 +8,7 @@ package baccarat;
 
 import javafx.application.Platform;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.lang.Math;
 import java.util.*;
@@ -19,7 +20,6 @@ public class Round {
     //instance variables
     private ArrayList<Hand> handList;    //1st hand is Banker, 2nd is Player
     private ArrayList<Bet> betList;
-
 
     //Constructor
     public Round() {
@@ -40,6 +40,7 @@ public class Round {
         //Clear all bets
         this.betList.clear();
     }
+
 
 
     //playerBet : method for a player to create a bet
@@ -201,7 +202,7 @@ public class Round {
 
 
     //giveWinnings : method to distribute winnings based on round winner
-    public void giveWinnings(BetType winner, ArrayList<Player> players) {
+    public void giveWinnings(BetType winner, ArrayList<Player> players) throws IOException {
         for (int i = 0; i < players.size(); i++) {
             //Determine if player won the bet
             if (this.betList.get(i).getBetType() == winner) {
@@ -210,7 +211,7 @@ public class Round {
                 Main.play.consoleMsg("winner: "+players.get(i).getName());
             }
         }
-        Main.play.updateBalances();
+        Main.play.finalUpdateBalances();
     }
 
 
