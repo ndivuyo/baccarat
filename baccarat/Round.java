@@ -207,8 +207,10 @@ public class Round {
             if (this.betList.get(i).getBetType() == winner) {
                 //Give winnings to a player
                 players.get(i).setBalance(calculateWinnings(winner, this.betList.get(i).getAmount()));
+                Main.play.consoleMsg("winner: "+players.get(i).getName());
             }
         }
+        Main.play.updateBalances();
     }
 
 
