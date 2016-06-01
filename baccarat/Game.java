@@ -6,6 +6,8 @@ This is the main class for controlling gameplay
 
 package baccarat;
 
+import javafx.application.Platform;
+
 import java.util.*;
 
 
@@ -16,9 +18,8 @@ public class Game {
 	private static final int MAX_PLAYERS = 4;				//Max players permitted
 	private static final double STARTING_BALANCE = 1000;	//Standard starting money for players
 	private Deck deck;										//The card deck
-	private Thread round;									//Thread to run gameplay rounds
 	private Main main;
-
+    public RunRound runround;
 
 	//Constructor
 	public Game() {
@@ -63,8 +64,9 @@ public class Game {
 	//startGame : method to start game
 	public void startGame() {
 		//Thread to run the rounds in
-		this.round = new Thread(new RunRound(this.playerList, this.deck));
-		this.round.start();
+        //Used this way instead so there can be proper communication between the Round thread and the javaFX thread
+        runround = new RunRound(this.playerList, this.deck);
+        Platform.runLater(runround);
 	}
 
 
@@ -75,7 +77,7 @@ public class Game {
 
 
 	/**** RunRound : runnable class for round thread ****/
-	class RunRound implements Runnable {
+	class RunRound implements Runnable{
 
 		//Instance variables
 		private ArrayList<Player> playerList;
@@ -92,12 +94,18 @@ public class Game {
 			Round round = new Round();
 			//Sequence for each round
 			while (true) {
-				round.newRound();						//resets round
-				round.placeBets(this.playerList);		//players bet
-				round.dealTwoCards(this.deck);			//deal the first 2 cards
-				round.dealThirdCard(this.deck);			//determine and deal third card
-				round.giveWinnings( round.determineWinner(), this.playerList );		//determine winning hand and distribute money
-			}
+
+                round.newRound();                        //resets round
+
+                round.placeBets(this.playerList);        //players bet
+
+                round.dealTwoCards(this.deck);            //deal the first 2 cards
+
+                round.dealThirdCard(this.deck);            //determine and deal third card
+
+                round.giveWinnings(round.determineWinner(), this.playerList);        //determine winning hand and distribute money
+
+            }
 		}
 	}
 }

@@ -6,6 +6,7 @@ This is the main java fx class for the gameplay and UI
 package baccarat;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -22,12 +23,11 @@ public class Main extends Application {
 
     private Scene currentScene;
     public static Game game;
-
+    public static PlayscreenController play;
 
     //start
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         //Object to handle gameplay
         game = new Game();
 
@@ -36,7 +36,6 @@ public class Main extends Application {
         Scene titleScene = new Scene(title, 1024, 600);
         primaryStage.setTitle("Baccarat");
         primaryStage.setResizable(false);
-        currentScene = titleScene;
         primaryStage.setScene(titleScene);
         primaryStage.show();
     }

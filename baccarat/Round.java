@@ -6,6 +6,8 @@ This is the class for controlling rounds
 
 package baccarat;
 
+import javafx.application.Platform;
+
 import java.util.Scanner;
 import java.lang.Math;
 import java.util.*;
@@ -25,6 +27,7 @@ public class Round {
 		this.betList = new ArrayList<Bet>();
 		this.handList.add( new Hand(HandType.BANKER) );
 		this.handList.add( new Hand(HandType.PLAYER) );
+
 	}
 
 
@@ -41,43 +44,31 @@ public class Round {
 
 	//playerBet : method for a player to create a bet
 	public Bet playerBet(Player player) {
+		double betAmount=0;
 
+		Main.play.setStatus(player.getName()+" is placing a bet!");
 
-		//MUCH OF THIS WILL CHANGE FOR GUI, SOME WILL STAY
-
-
-		//User input
-		Scanner scan = new Scanner(System.in);
-		System.out.println("Who will you bet on?\n(0) for Banker, (1) for Player, (2) for Tie, (3) for Pass.\n");
 		int betIndex;
+		betIndex=Main.play.promptForBetType(player);
 
-		//Get valid bet type
-		while (true) {
-			betIndex = scan.nextInt();
-			if (betIndex >= 0 && betIndex <= 3)
-				break;
-			else
-				System.out.println("\nError: Please enter a correct number. (0 - 3)\n");
+		if(betIndex!=3) {
+
+			//Get valid bet amount
+			while (true) {
+				betAmount = Main.play.promptForBetAmount(player);
+				if (betAmount > player.getBalance())
+					Main.play.alert("Error: Bet is higher than available balance.");
+				else if(betAmount < 0.0)
+					Main.play.alert("Error: Bet must be greater than 0.");
+				else
+					break;
+			}
+
+			//Take the money from the player's balance
+			player.setBalance(player.getBalance() - betAmount);
+			Main.play.updateBalances();
+			//Determine correct bet type with input
 		}
-
-		System.out.println("How much will you bet?\n");
-		double betAmount;
-
-		//Get valid bet amount
-		while (true) {
-			betAmount = scan.nextDouble();
-			if (betAmount > 0)
-				break;
-			else if (player.getBalance() < betAmount)
-				System.out.println("\nError: Bet is higher than available balance.\n");
-			else
-				System.out.println("\nError: Bet must be greater than 0.\n");
-		}
-
-		//Take the money from the player's balance
-		player.setBalance( player.getBalance() - betAmount );
-
-		//Determine correct bet type with input
 		BetType betType;
 		switch (betIndex) {
 			case 0:
@@ -94,6 +85,8 @@ public class Round {
 				betType = BetType.PASS;
 		}
 
+		Main.play.consoleMsg(player.getName()+"'s bet: "+betType);
+		Main.play.consoleMsg(player.getName()+"'s bet: "+betAmount);
 		return new Bet(betType, betAmount);
 	}
 
@@ -182,6 +175,10 @@ public class Round {
 		//deal banker third card
 		if (bankerDrawStatus == true)
 			deal(this.handList.get(0), deck);
+
+		for(Hand hand: handList){
+			Main.play.consoleMsg(hand.getHandType()+": "+hand.calculateValue());
+		}
 	}
 
 
