@@ -1,6 +1,7 @@
 package baccarat;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,6 +20,11 @@ public class TitleController {
     public TextField nameField;
     public Text console;
     public Text playerList;
+
+    @FXML
+    public void initialize(){
+        updatePList();
+    }
 
     public void addPlayer(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -116,7 +122,7 @@ public class TitleController {
             for(int i = 1; i < (30-player.getName().length());i++){
                 playerList.setText(playerList.getText()+" ");
             }
-            playerList.setText(playerList.getText()+"$"+player.getBalance()+"\n");
+            playerList.setText(playerList.getText()+"$"+String.format("%.2f", player.getBalance())+"\n");
         }
     }
 
@@ -140,5 +146,9 @@ public class TitleController {
             stage.setScene(scene);
             stage.show();
         }
+    }
+
+    public void exit(ActionEvent actionEvent) {
+        System.exit(0);
     }
 }

@@ -6,9 +6,7 @@ This is the class for controlling rounds
 
 package baccarat;
 
-import javafx.application.Platform;
-
-import java.util.Scanner;
+import java.io.IOException;
 import java.lang.Math;
 import java.util.*;
 
@@ -19,7 +17,6 @@ public class Round {
     //instance variables
     private ArrayList<Hand> handList;    //1st hand is Banker, 2nd is Player
     private ArrayList<Bet> betList;
-
 
     //Constructor
     public Round() {
@@ -39,7 +36,10 @@ public class Round {
         }
         //Clear all bets
         this.betList.clear();
+        Main.play.resetBetCoins();
+        Main.play.resetCards();
     }
+
 
 
     //playerBet : method for a player to create a bet
@@ -95,7 +95,10 @@ public class Round {
     public void placeBets(ArrayList<Player> players) {
         for (int i = 0; i < players.size(); i++) {
             //Add bets to the betList in player order
-            this.betList.add(this.playerBet(players.get(i)));
+            Bet bet = playerBet(players.get(i));
+            Main.play.showBetCoins(bet, i);
+            this.betList.add(bet);
+
         }
     }
 
@@ -110,7 +113,6 @@ public class Round {
 
         //Add card to a hand
         hand.addCard(dealtCard);
-
         return dealtCard;
     }
 
@@ -123,6 +125,10 @@ public class Round {
                 deal(this.handList.get(i), deck);
             }
         }
+    }
+
+    public ArrayList<Hand> getHands(){
+        return handList;
     }
 
 
@@ -201,16 +207,20 @@ public class Round {
 
 
     //giveWinnings : method to distribute winnings based on round winner
-    public void giveWinnings(BetType winner, ArrayList<Player> players) {
+    public void giveWinnings(BetType winner, ArrayList<Player> players) throws IOException {
         for (int i = 0; i < players.size(); i++) {
             //Determine if player won the bet
             if (this.betList.get(i).getBetType() == winner) {
                 //Give winnings to a player
-                players.get(i).setBalance(calculateWinnings(winner, this.betList.get(i).getAmount()));
+                players.get(i).setBalance(players.get(i).getBalance()+calculateWinnings(winner, this.betList.get(i).getAmount()));
+
                 Main.play.consoleMsg("winner: "+players.get(i).getName());
+                Main.play.setStatus(players.get(i).getName()+" Wins!");
+                Main.play.moveBetCoins(players.get(i));
+
             }
         }
-        Main.play.updateBalances();
+        Main.play.finalUpdateBalances();
     }
 
 
