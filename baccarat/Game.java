@@ -89,6 +89,7 @@ public class Game {
         private ArrayList<Player> playerList;
         private Deck deck;
         public boolean running=true;
+        public Round round;
 
         //Constructor
         public RunRound(ArrayList<Player> players, Deck deck) {
@@ -99,7 +100,7 @@ public class Game {
 
         //run : overridden method for runnable
         public void run() {
-            Round round = new Round();
+            round = new Round();
 
             round.newRound();
 
@@ -110,10 +111,17 @@ public class Game {
             round.dealThirdCard(Main.game.deck);
 
             try {
-                round.giveWinnings(round.determineWinner(), Main.game.playerList);
+                Main.play.showCards();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            /*handled at the end of the card dealing animation instead, triggered in show cards
+            try {
+                round.giveWinnings(round.determineWinner(), Main.game.getPlayerList());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
 
             Main.play.start.setVisible(true);
             Main.play.exitButton.setVisible(true);

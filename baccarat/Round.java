@@ -37,6 +37,7 @@ public class Round {
         //Clear all bets
         this.betList.clear();
         Main.play.resetBetCoins();
+        Main.play.resetCards();
     }
 
 
@@ -112,7 +113,6 @@ public class Round {
 
         //Add card to a hand
         hand.addCard(dealtCard);
-
         return dealtCard;
     }
 
@@ -125,6 +125,10 @@ public class Round {
                 deal(this.handList.get(i), deck);
             }
         }
+    }
+
+    public ArrayList<Hand> getHands(){
+        return handList;
     }
 
 

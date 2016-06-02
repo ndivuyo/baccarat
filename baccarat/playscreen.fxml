@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -17,7 +18,7 @@
 
 <StackPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baccarat.PlayscreenController">
    <children>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" style="-fx-background-image: url('http://i.imgur.com/DpAnhaN.png');">
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" style="-fx-background-image: url('/images/background.png');">
          <top>
             <GridPane prefHeight="52.0" prefWidth="600.0" BorderPane.alignment="CENTER">
               <columnConstraints>
@@ -234,16 +235,49 @@
                   </HBox>
                </children>
             </Group>
-            <Button fx:id="start" mnemonicParsing="false" onAction="#buttonPress" text="Start" translateX="880.0" translateY="10.0">
+            <Button fx:id="start" mnemonicParsing="false" onAction="#buttonPress" text="Start!" translateX="850.0" translateY="10.0">
                <font>
-                  <Font size="16.0" />
+                  <Font size="20.0" />
                </font>
+               <effect>
+                  <DropShadow color="#f0fc17" height="109.04" radius="72.2325" spread="0.4" width="181.89" />
+               </effect>
             </Button>
             <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitclick" text="Exit" translateX="950.0" translateY="10.0">
                <font>
-                  <Font size="16.0" />
+                  <Font size="20.0" />
                </font>
             </Button>
+            <ImageView fx:id="pcard1" fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" translateX="280.0" translateY="115.0">
+               <image>
+                  <Image url="@../images/cover.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="pcard2" fitHeight="100.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" translateX="345.0" translateY="105.0">
+               <image>
+                  <Image url="@../images/cover.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="pcard3" fitHeight="100.0" fitWidth="200.0" layoutX="20.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" translateX="410.0" translateY="95.0">
+               <image>
+                  <Image url="@../images/cover.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="dcard1" fitHeight="100.0" fitWidth="200.0" layoutX="30.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" translateX="500.0" translateY="85.0">
+               <image>
+                  <Image url="@../images/cover.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="dcard2" fitHeight="100.0" fitWidth="200.0" layoutX="40.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" translateX="565.0" translateY="75.0">
+               <image>
+                  <Image url="@../images/cover.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="dcard3" fitHeight="100.0" fitWidth="200.0" layoutX="50.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" translateX="630.0" translateY="65.0">
+               <image>
+                  <Image url="@../images/cover.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
    </children>

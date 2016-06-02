@@ -14,6 +14,8 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -59,11 +61,28 @@ public class PlayscreenController {
     public ArrayList<Group> groups = new ArrayList<>();
     public ArrayList<Text> betTexts = new ArrayList<>();
 
+    public ImageView pcard1;
+    public ImageView pcard2;
+    public ImageView pcard3;
+    public ImageView dcard1;
+    public ImageView dcard2;
+    public ImageView dcard3;
+
+    public String cardstr0="/images/cover.png";
+    public String cardstr1="/images/cover.png";
+    public String cardstr2="/images/cover.png";
+    public String cardstr3="/images/cover.png";
+    public String cardstr4="/images/cover.png";
+    public String cardstr5="/images/cover.png";
+
+    ArrayList<ImageView> cards = new ArrayList<>();
+
 
     @FXML
     public void initialize(){
         consoleMsg("Good luck!");
         consoleMsg("Welcome to Baccarat!");
+        setStatus("Welcome to Baccarat!");
         groups.add(group1);
         groups.add(group2);
         groups.add(group3);
@@ -72,12 +91,19 @@ public class PlayscreenController {
         betTexts.add(p2betText);
         betTexts.add(p3betText);
         betTexts.add(p4betText);
+        cards.add(pcard1);
+        cards.add(pcard2);
+        cards.add(pcard3);
+        cards.add(dcard1);
+        cards.add(dcard2);
+        cards.add(dcard3);
 
         for(Group box: groups){
             box.setVisible(false);
         }
         Main.play=this;
         updateBalances();
+        resetCards();
 
     }
 
@@ -196,10 +222,10 @@ public class PlayscreenController {
     public int promptForBetType(Player player) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(player.getName()+"'s turn");
-        alert.setHeaderText(null);
-        alert.setContentText("You can choose to bet on either the Banker, the Player, a tie, \nor you can pass.");
+        alert.setHeaderText("You can choose to bet on either the Dealer, the Player, a tie, \nor you can pass.");
+        alert.setContentText(null);
 
-        ButtonType buttonTypeOne = new ButtonType("Banker");
+        ButtonType buttonTypeOne = new ButtonType("Dealer");
         ButtonType buttonTypeTwo = new ButtonType("Player");
         ButtonType buttonTypeThree = new ButtonType("Tie");
         ButtonType buttonTypeFour = new ButtonType("Pass");
@@ -398,6 +424,211 @@ public class PlayscreenController {
             }
         });
 
+    }
+
+    public void resetCards(){
+        final Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(true);
+
+        for(ImageView card: cards){
+            card.setImage(new Image("images/cover.png"));
+            KeyValue kv = new KeyValue(card.translateXProperty(), 875);
+            KeyFrame kf = new KeyFrame(Duration.millis(750), kv);
+            KeyValue kv1 = new KeyValue(card.translateYProperty(), 75);
+            KeyFrame kf1 = new KeyFrame(Duration.millis(750), kv1);
+            timeline.getKeyFrames().addAll(kf, kf1);
+        }
+
+        timeline.play();
+        timeline.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                for(ImageView card: cards){
+                    card.setVisible(false);
+                }
+            }
+        });
+
+    }
+
+    /* DO NOTTTTT LOOK IN HERE ITS LONG AND MESSY BUT IT WORKS */
+
+    public void showCards() throws IOException {
+        setStatus("Dealing out the cards...");
+        String cardstr0="/images/cover.png";
+        String cardstr1="/images/cover.png";
+        String cardstr2="/images/cover.png";
+        String cardstr3="/images/cover.png";
+        String cardstr4="/images/cover.png";
+        String cardstr5="/images/cover.png";
+
+        final Timeline timeline0 = new Timeline();
+        timeline0.setCycleCount(1);
+        timeline0.setAutoReverse(true);
+        final Timeline timeline1 = new Timeline();
+        timeline1.setCycleCount(1);
+        timeline1.setAutoReverse(true);
+        final Timeline timeline2 = new Timeline();
+        timeline2.setCycleCount(1);
+        timeline2.setAutoReverse(true);
+        final Timeline timeline3 = new Timeline();
+        timeline3.setCycleCount(1);
+        timeline3.setAutoReverse(true);
+        final Timeline timeline4 = new Timeline();
+        timeline4.setCycleCount(1);
+        timeline4.setAutoReverse(true);
+        final Timeline timeline5 = new Timeline();
+        timeline5.setCycleCount(1);
+        timeline5.setAutoReverse(true);
+
+        int i = 0;
+        for(Hand hand: Main.game.runround.round.getHands()){
+            int x = 0;
+            for(Card card: hand.getCardList()){
+                if(i==0){
+                    if(x==0){
+                        Main.play.cardstr0 = getCardImgStr(card);
+                        KeyValue kv = new KeyValue(pcard1.translateXProperty(), 280);
+                        KeyFrame kf = new KeyFrame(Duration.millis(750), kv);
+                        KeyValue kv1 = new KeyValue(pcard1.translateYProperty(), 115);
+                        KeyFrame kf1 = new KeyFrame(Duration.millis(750), kv1);
+                        timeline0.getKeyFrames().addAll(kf, kf1);
+                        pcard1.setVisible(true);
+                    }
+                    if(x==1){
+                        Main.play.cardstr1 = getCardImgStr(card);
+                        KeyValue kv = new KeyValue(pcard2.translateXProperty(), 345);
+                        KeyFrame kf = new KeyFrame(Duration.millis(1000), kv);
+                        KeyValue kv1 = new KeyValue(pcard2.translateYProperty(), 105);
+                        KeyFrame kf1 = new KeyFrame(Duration.millis(1000), kv1);
+                        timeline2.getKeyFrames().addAll(kf, kf1);
+                        pcard2.setVisible(true);
+                    }
+                    if(x==2){
+                        Main.play.cardstr2 = getCardImgStr(card);
+                        KeyValue kv = new KeyValue(pcard3.translateXProperty(), 410);
+                        KeyFrame kf = new KeyFrame(Duration.millis(1250), kv);
+                        KeyValue kv1 = new KeyValue(pcard3.translateYProperty(), 95);
+                        KeyFrame kf1 = new KeyFrame(Duration.millis(1250), kv1);
+                        timeline4.getKeyFrames().addAll(kf, kf1);
+                        pcard3.setVisible(true);
+                    }
+                }
+                if(i==1){
+                    if(x==0){
+                        Main.play.cardstr3 = getCardImgStr(card);
+                        KeyValue kv = new KeyValue(dcard1.translateXProperty(), 500);
+                        KeyFrame kf = new KeyFrame(Duration.millis(750), kv);
+                        KeyValue kv1 = new KeyValue(dcard1.translateYProperty(), 85);
+                        KeyFrame kf1 = new KeyFrame(Duration.millis(750), kv1);
+                        timeline1.getKeyFrames().addAll(kf, kf1);
+                        dcard1.setVisible(true);
+                    }
+                    if(x==1){
+                        Main.play.cardstr4 = getCardImgStr(card);
+                        KeyValue kv = new KeyValue(dcard2.translateXProperty(), 565);
+                        KeyFrame kf = new KeyFrame(Duration.millis(1000), kv);
+                        KeyValue kv1 = new KeyValue(dcard2.translateYProperty(), 75);
+                        KeyFrame kf1 = new KeyFrame(Duration.millis(1000), kv1);
+                        timeline3.getKeyFrames().addAll(kf, kf1);
+                        dcard2.setVisible(true);
+                    }
+                    if(x==2){
+                        Main.play.cardstr5 = getCardImgStr(card);
+                        KeyValue kv = new KeyValue(dcard3.translateXProperty(), 630);
+                        KeyFrame kf = new KeyFrame(Duration.millis(1250), kv);
+                        KeyValue kv1 = new KeyValue(dcard3.translateYProperty(), 65);
+                        KeyFrame kf1 = new KeyFrame(Duration.millis(1250), kv1);
+                        timeline5.getKeyFrames().addAll(kf, kf1);
+                        dcard3.setVisible(true);
+                    }
+                }
+                x++;
+            }
+            i++;
+        }
+
+
+        timeline0.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pcard1.setImage(new Image(Main.play.cardstr0));
+                timeline1.play();
+
+            }
+        });
+        timeline1.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dcard1.setImage(new Image(Main.play.cardstr1));
+                timeline2.play();
+
+            }
+        });
+        timeline2.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pcard2.setImage(new Image(Main.play.cardstr2));
+                timeline3.play();
+
+            }
+        });
+        timeline3.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dcard2.setImage(new Image(Main.play.cardstr3));
+                timeline4.play();
+
+            }
+        });
+        timeline4.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                pcard3.setImage(new Image(Main.play.cardstr4));
+                timeline5.play();
+
+            }
+        });
+        timeline5.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dcard3.setImage(new Image(Main.play.cardstr5));
+                try {
+                    Main.game.runround.round.giveWinnings(Main.game.runround.round.determineWinner(), Main.game.getPlayerList());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+
+        timeline0.play();
+
+    }
+
+
+
+    private String getCardImgStr(Card card){
+        String str="images/";
+        switch(card.getSuit()){
+            case CLUB:
+                str+="Clubs/";
+                break;
+            case DIAMOND:
+                str+="Diamonds/";
+                break;
+            case HEART:
+                str+="Hearts/";
+                break;
+            case SPADE:
+                str+="Spades/";
+                break;
+        }
+        str+=""+card.getFaceValue()+".png";
+        return str;
     }
 
 }

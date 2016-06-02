@@ -122,7 +122,7 @@ public class TitleController {
             for(int i = 1; i < (30-player.getName().length());i++){
                 playerList.setText(playerList.getText()+" ");
             }
-            playerList.setText(playerList.getText()+"$"+player.getBalance()+"\n");
+            playerList.setText(playerList.getText()+"$"+String.format("%.2f", player.getBalance())+"\n");
         }
     }
 
