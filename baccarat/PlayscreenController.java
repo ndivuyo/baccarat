@@ -1,17 +1,23 @@
 package baccarat;
 
 import com.sun.org.apache.xpath.internal.SourceTree;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import javax.annotation.Resources;
 import java.io.IOException;
@@ -35,16 +41,44 @@ public class PlayscreenController {
     public Text p3CashField;
     public Text p4NameField;
     public Text p4CashField;
+
     public Button start;
     public Button exitButton;
+
+
+    public Text p1betText;
+    public Text p2betText;
+    public Text p3betText;
+    public Text p4betText;
+
+    public Group group1;
+    public Group group2;
+    public Group group3;
+    public Group group4;
+
+    public ArrayList<Group> groups = new ArrayList<>();
+    public ArrayList<Text> betTexts = new ArrayList<>();
 
 
     @FXML
     public void initialize(){
         consoleMsg("Good luck!");
         consoleMsg("Welcome to Baccarat!");
+        groups.add(group1);
+        groups.add(group2);
+        groups.add(group3);
+        groups.add(group4);
+        betTexts.add(p1betText);
+        betTexts.add(p2betText);
+        betTexts.add(p3betText);
+        betTexts.add(p4betText);
+
+        for(Group box: groups){
+            box.setVisible(false);
+        }
         Main.play=this;
         updateBalances();
+
     }
 
 
@@ -74,6 +108,9 @@ public class PlayscreenController {
         Main.game.startGame();
         start.setVisible(false);
         exitButton.setVisible(false);
+        for(Group box: groups){
+            box.setVisible(false);
+        }
     }
 
     public void updateBalances(){
@@ -83,22 +120,22 @@ public class PlayscreenController {
             switch (i){
                 case 1: {
                     p1NameField.setText(player.getName());
-                    p1CashField.setText("$" + player.getBalance());
+                    p1CashField.setText("$" + String.format("%.2f", player.getBalance()));
                     break;
                 }
                 case 2: {
                     p2NameField.setText(player.getName());
-                    p2CashField.setText("$" + player.getBalance());
+                    p2CashField.setText("$" + String.format("%.2f", player.getBalance()));
                     break;
                 }
                 case 3: {
                     p3NameField.setText(player.getName());
-                    p3CashField.setText("$" + player.getBalance());
+                    p3CashField.setText("$" + String.format("%.2f", player.getBalance()));
                     break;
                 }
                 case 4: {
                     p4NameField.setText(player.getName());
-                    p4CashField.setText("$" + player.getBalance());
+                    p4CashField.setText("$" + String.format("%.2f", player.getBalance()));
                     break;
                 }
             }
@@ -133,22 +170,22 @@ public class PlayscreenController {
             switch (i){
                 case 1: {
                     p1NameField.setText(player.getName());
-                    p1CashField.setText("$" + player.getBalance());
+                    p1CashField.setText("$" + String.format("%.2f", player.getBalance()));
                     break;
                 }
                 case 2: {
                     p2NameField.setText(player.getName());
-                    p2CashField.setText("$" + player.getBalance());
+                    p2CashField.setText("$" + String.format("%.2f", player.getBalance()));
                     break;
                 }
                 case 3: {
                     p3NameField.setText(player.getName());
-                    p3CashField.setText("$" + player.getBalance());
+                    p3CashField.setText("$" + String.format("%.2f", player.getBalance()));
                     break;
                 }
                 case 4: {
                     p4NameField.setText(player.getName());
-                    p4CashField.setText("$" + player.getBalance());
+                    p4CashField.setText("$" + String.format("%.2f", player.getBalance()));
                     break;
                 }
             }
@@ -264,6 +301,102 @@ public class PlayscreenController {
         Scene scene = new Scene(root, 1024, 600);
         stage.setScene(scene);
         stage.show();
+
+    }
+
+    public void showBetCoins(Bet bet, int i){
+        if(bet.getBetType()!=BetType.PASS) {
+            betTexts.get(i).setText("$" + String.format("%.2f", bet.getAmount()));
+            groups.get(i).setVisible(true);
+            final Timeline timeline = new Timeline();
+            timeline.setCycleCount(1);
+            timeline.setAutoReverse(true);
+            KeyValue kv = new KeyValue(groups.get(i).translateYProperty(), 285);
+            if(bet.getBetType()==BetType.BANKER) {
+                kv = new KeyValue(groups.get(i).translateYProperty(), 285);
+            }
+            if(bet.getBetType()==BetType.PLAYER) {
+                kv = new KeyValue(groups.get(i).translateYProperty(), 385);
+            }
+            if(bet.getBetType()==BetType.TIE) {
+                kv = new KeyValue(groups.get(i).translateYProperty(), 205);
+            }
+            final KeyFrame kf = new KeyFrame(Duration.millis(600), kv);
+            timeline.getKeyFrames().add(kf);
+            timeline.play();
+        }
+    }
+
+    public void resetBetCoins(){
+        int i = 0;
+        for(Group g: groups){
+            g.setTranslateY(450);
+            if(i==0){
+                g.setTranslateX(75);
+            }
+            if(i==1){
+                g.setTranslateX(300);
+            }
+            if(i==2){
+                g.setTranslateX(525);
+            }
+            if(i==3){
+                g.setTranslateX(775);
+            }
+            g.setVisible(false);
+            i++;
+        }
+    }
+
+    public void moveBetCoins(Player player){
+        final Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(true);
+
+
+        int playerNo=0;
+        int playerX=0;
+
+        for(int i=0;i<Main.game.getPlayerList().size();i++){
+            if(Main.game.getPlayerList().get(i).equals(player)){
+                playerNo=i;
+            }
+        }
+
+        switch(playerNo){
+            case 0:
+                playerX=75;
+                break;
+            case 1:
+                playerX=300;
+                break;
+            case 2:
+                playerX=525;
+                break;
+            case 3:
+                playerX=775;
+                break;
+            default:
+                break;
+        }
+
+        for(Group group: groups){
+            KeyValue kv = new KeyValue(group.translateXProperty(), playerX);
+            KeyFrame kf = new KeyFrame(Duration.millis(750), kv);
+            timeline.getKeyFrames().add(kf);
+            KeyValue kv1 = new KeyValue(group.translateYProperty(), 450);
+            KeyFrame kf1 = new KeyFrame(Duration.millis(750), kv1);
+            timeline.getKeyFrames().add(kf1);
+        }
+        timeline.play();
+        timeline.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                for(Group group: groups){
+                    group.setVisible(false);
+                }
+            }
+        });
 
     }
 

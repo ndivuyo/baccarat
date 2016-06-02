@@ -6,10 +6,7 @@ This is the class for controlling rounds
 
 package baccarat;
 
-import javafx.application.Platform;
-
 import java.io.IOException;
-import java.util.Scanner;
 import java.lang.Math;
 import java.util.*;
 
@@ -39,6 +36,7 @@ public class Round {
         }
         //Clear all bets
         this.betList.clear();
+        Main.play.resetBetCoins();
     }
 
 
@@ -96,7 +94,10 @@ public class Round {
     public void placeBets(ArrayList<Player> players) {
         for (int i = 0; i < players.size(); i++) {
             //Add bets to the betList in player order
-            this.betList.add(this.playerBet(players.get(i)));
+            Bet bet = playerBet(players.get(i));
+            Main.play.showBetCoins(bet, i);
+            this.betList.add(bet);
+
         }
     }
 
@@ -207,8 +208,12 @@ public class Round {
             //Determine if player won the bet
             if (this.betList.get(i).getBetType() == winner) {
                 //Give winnings to a player
-                players.get(i).setBalance(calculateWinnings(winner, this.betList.get(i).getAmount()));
+                players.get(i).setBalance(players.get(i).getBalance()+calculateWinnings(winner, this.betList.get(i).getAmount()));
+
                 Main.play.consoleMsg("winner: "+players.get(i).getName());
+                Main.play.setStatus(players.get(i).getName()+" Wins!");
+                Main.play.moveBetCoins(players.get(i));
+
             }
         }
         Main.play.finalUpdateBalances();
