@@ -244,18 +244,17 @@ public class PlayscreenController {
         }
     }
 
-    public double promptForBetAmount(Player player){
+    public String promptForBetAmount(Player player){
         TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle(player.getName()+"'s turn");
         dialog.setHeaderText(null);
         dialog.setContentText("Your bet can be anything from 0 to "+player.getBalance()+":");
 
-
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()){
-            return Double.parseDouble(result.get());
+            return result.get();
         }
-        return -1000.0;
+        return "-1000.0";
     }
 
     public void alert(String str){
@@ -270,6 +269,7 @@ public class PlayscreenController {
         exit();
     }
 
+    //
     public void exit(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit");
@@ -561,7 +561,7 @@ public class PlayscreenController {
         timeline1.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                dcard1.setImage(new Image(Main.play.cardstr1));
+                dcard1.setImage(new Image(Main.play.cardstr3));
                 timeline2.play();
 
             }
@@ -569,7 +569,7 @@ public class PlayscreenController {
         timeline2.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                pcard2.setImage(new Image(Main.play.cardstr2));
+                pcard2.setImage(new Image(Main.play.cardstr1));
                 timeline3.play();
 
             }
@@ -577,7 +577,7 @@ public class PlayscreenController {
         timeline3.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                dcard2.setImage(new Image(Main.play.cardstr3));
+                dcard2.setImage(new Image(Main.play.cardstr4));
                 timeline4.play();
 
             }
@@ -585,7 +585,7 @@ public class PlayscreenController {
         timeline4.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                pcard3.setImage(new Image(Main.play.cardstr4));
+                pcard3.setImage(new Image(Main.play.cardstr2));
                 timeline5.play();
 
             }
@@ -627,7 +627,7 @@ public class PlayscreenController {
                 str+="Spades/";
                 break;
         }
-        str+=""+card.getFaceValue()+".png";
+        str += card.getFaceValue() + ".png";
         return str;
     }
 

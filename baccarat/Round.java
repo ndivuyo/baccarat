@@ -15,15 +15,15 @@ public class Round {
 
 
     //instance variables
-    private ArrayList<Hand> handList;    //1st hand is Banker, 2nd is Player
+    private ArrayList<Hand> handList;    //1st hand is Player, 2nd is Banker
     private ArrayList<Bet> betList;
 
     //Constructor
     public Round() {
         this.handList = new ArrayList<Hand>();
         this.betList = new ArrayList<Bet>();
-        this.handList.add(new Hand(HandType.BANKER));
         this.handList.add(new Hand(HandType.PLAYER));
+        this.handList.add(new Hand(HandType.BANKER));
 
     }
 
@@ -44,6 +44,7 @@ public class Round {
 
     //playerBet : method for a player to create a bet
     public Bet playerBet(Player player) {
+        String betString;
         double betAmount = 0;
 
         Main.play.setStatus(player.getName() + " is placing a bet!");
@@ -55,7 +56,12 @@ public class Round {
 
             //Get valid bet amount
             while (true) {
-                betAmount = Main.play.promptForBetAmount(player);
+                betString = Main.play.promptForBetAmount(player);
+                if (!this.isNumeric(betString)) {
+                    Main.play.alert("Error: Bet is must be a number.");
+                    continue;
+                } else
+                    betAmount = Double.parseDouble(betString);
                 if (betAmount > player.getBalance())
                     Main.play.alert("Error: Bet is higher than available balance.");
                 else if (betAmount < 0.0)
@@ -191,33 +197,57 @@ public class Round {
     //determineWinner : method to determine the winner of the round
     public BetType determineWinner() {
         int[] totals = new int[2];
+        BetType winner;
+        String winnerName;
 
         for (int i = 0; i < 2; i++) {
             totals[i] = this.handList.get(i).calculateValue();
             totals[i] = Math.abs(9 - totals[i]);    //Closest to 9 wins
         }
 
-        if (totals[0] < totals[1])
-            return BetType.BANKER;
-        else if (totals[0] > totals[1])
-            return BetType.PLAYER;
-        else
-            return BetType.TIE;
+        if (totals[0] < totals[1]) {
+            winner = BetType.PLAYER;
+            winnerName = "Player";
+        }
+        else if (totals[0] > totals[1]) {
+            winner = BetType.BANKER;
+            winnerName = "Banker";
+        }
+        else {
+            winner = BetType.TIE;
+            winnerName = "Tie";
+        }
+
+         Main.play.setStatus(winnerName + " Wins!");
+        return winner;
     }
 
 
     //giveWinnings : method to distribute winnings based on round winner
     public void giveWinnings(BetType winner, ArrayList<Player> players) throws IOException {
         for (int i = 0; i < players.size(); i++) {
+            String winnerName;
+
             //Determine if player won the bet
             if (this.betList.get(i).getBetType() == winner) {
+
                 //Give winnings to a player
-                players.get(i).setBalance(players.get(i).getBalance()+calculateWinnings(winner, this.betList.get(i).getAmount()));
+                players.get(i).setBalance(players.get(i).getBalance() + calculateWinnings(winner, this.betList.get(i).getAmount()));
 
-                Main.play.consoleMsg("winner: "+players.get(i).getName());
-                Main.play.setStatus(players.get(i).getName()+" Wins!");
+                switch(winner) {
+                    case BANKER:
+                        winnerName = "Banker";
+                        break;
+                    case PLAYER:
+                        winnerName = "Player";
+                        break;
+                    default:
+                        winnerName = "tie";
+                        break;
+                }
+
+                Main.play.consoleMsg("Winner: " + winnerName);
                 Main.play.moveBetCoins(players.get(i));
-
             }
         }
         Main.play.finalUpdateBalances();
@@ -235,6 +265,14 @@ public class Round {
         else if (winner == BetType.TIE)
             winnings = amount * 8;
 
+
         return winnings;
+    }
+
+
+    //Check if string is a number
+    public static boolean isNumeric(String string)
+    {
+      return string.matches("-?\\d+(\\.\\d+)?");
     }
 }

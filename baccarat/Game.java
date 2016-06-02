@@ -101,13 +101,9 @@ public class Game {
         //run : overridden method for runnable
         public void run() {
             round = new Round();
-
             round.newRound();
-
             round.placeBets(Main.game.playerList);
-
             round.dealTwoCards(Main.game.deck);
-
             round.dealThirdCard(Main.game.deck);
 
             try {
@@ -115,13 +111,6 @@ public class Game {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            /*handled at the end of the card dealing animation instead, triggered in show cards
-            try {
-                round.giveWinnings(round.determineWinner(), Main.game.getPlayerList());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
 
             Main.play.start.setVisible(true);
             Main.play.exitButton.setVisible(true);
